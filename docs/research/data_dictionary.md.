@@ -1,0 +1,54 @@
+# AgriYield – Dataset Data Dictionary
+
+## Dataset Information
+- **Source:** FAOSTAT – Crops and Livestock Products
+- **Country:** Rwanda
+- **Records:** 234
+- **Columns:** 15
+- **Crops:** 6
+- **Period:** 2010–2024 
+- **File:** FAOSTAT_data_en_11-13-2026.csv
+
+## Dataset Fields
+
+| Column | Description |
+|---|---|
+| Domain Code | FAOSTAT dataset identifier |
+| Domain | Agricultural data category |
+| Area Code (M49) | Country identification code |
+| Area | Country name |
+| Element Code | Indicator identification code |
+| Element | Area harvested, Yield, or Production |
+| Item Code (CPC) | Crop identification code |
+| Item | Crop name |
+| Year Code | Year identifier |
+| Year | Observation year |
+| Unit | Measurement unit |
+| Value | Recorded agricultural value |
+| Flag | Data quality/status code |
+| Flag Description | Explanation of the data flag |
+| Note | Additional information, if available |
+
+## Main Indicators
+
+- **Area harvested:** Measured in hectares (ha).
+- **Yield:** Measured in kilograms per hectare (kg/ha).
+- **Production:** Measured in tonnes (t).
+
+## Data Quality
+The dataset contains:
+- 208 official values.
+- 19 estimated values.
+- 7 imputed values.
+
+The original data-quality flags must be preserved during database import.
+
+## Database Preparation Plan
+1. Import the original CSV into a staging table.
+2. Create crop records in the CROPS table.
+3. Organize agricultural observations by crop and year.
+4. Transform the three indicators into structured crop statistics.
+5. Validate imported records against the original dataset.
+
+## Data Limitation
+The dataset contains historical country-level statistics for Rwanda. It does not provide individual farm-level production records. The years 2017 and 2018 are not represented in the downloaded file.
