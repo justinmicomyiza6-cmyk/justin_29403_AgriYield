@@ -96,3 +96,13 @@ AgriYield follows a structured process for collecting agricultural statistics fr
 ### 5. Data Operations
 
 The process includes creating, retrieving, and updating agricultural records. Invalid records are rejected or retained for review rather than routinely deleted.
+
+## Phase II — Data Understanding and Database Design
+
+### Deliverables
+
+- [Dataset Card](data/dataset_card.md)
+- [Normalization Documentation](docs/design/normalization.md)
+- [Entity Relationship Diagram](docs/design/erd.png)
+- [Data Dictionary](docs/design/data_dictionary.md)
+- [Raw Dataset](data/raw/FAOSTAT_data_en_11-18-2026.csv)
