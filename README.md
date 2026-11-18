@@ -60,3 +60,14 @@ A functional Oracle database application capable of storing, analyzing, and repo
 
 ## 9. Project Status
 Phase 0 – Project proposal and research.
+
+## Phase I – Business Process Modeling
+
+**Business Process:** Agricultural Data Collection,
+Validation, Storage and Reporting.
+
+**Modeling Tool:** diagrams.net (draw.io)
+
+**Published Diagram:** [View AgriYield BPMN Diagram](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=AgriYield_Business_Process_29403.drawio&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1wpEvfcHa1U6DIcBEGvG-MkkZziMriVmn%26export%3Ddownload#%7B%22pageId%22%3A%22agriyield-phase1%22%7D)
+
+**Process Explanation:** [View Business Process Explanation](docs/business_process/business_process_explanation.pdf)
