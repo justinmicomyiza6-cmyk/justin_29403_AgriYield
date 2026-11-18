@@ -33,8 +33,4 @@ A detailed quality assessment will be conducted in Phase II. The following will 
 
 ## 5. Data Preservation
 
-The original downloaded CSV is stored unchanged in:
-
-`data/raw/FAOSTAT_data_en_11-18-2026.csv`
-
 The raw dataset will be preserved as the source for subsequent normalization, logical design, and database implementation.
