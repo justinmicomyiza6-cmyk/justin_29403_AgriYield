@@ -34,3 +34,24 @@ A detailed quality assessment will be conducted in Phase II. The following will 
 ## 5. Data Preservation
 
 The raw dataset will be preserved as the source for subsequent normalization, logical design, and database implementation.
+
+### Data Quality Assessment Results
+
+The dataset contains 4,041 records and 15 columns.
+
+**Missing values:**
+- Value: 36 records
+- Note: 3,839 records
+- Other columns: 0 missing values reported
+
+**Data quality flags:**
+
+| Flag | Description | Count |
+|---|---|---:|
+| A | Official value | 2,328 |
+| E | Estimated value | 824 |
+| I | Value imputed by a receiving agency | 562 |
+| X | Value from external organization | 290 |
+| M | Missing value; data cannot exist | 36 |
+
+One record remains unaccounted for in the flag counts and requires verification.
