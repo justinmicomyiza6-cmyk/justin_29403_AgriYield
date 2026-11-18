@@ -63,11 +63,36 @@ Phase 0 – Project proposal and research.
 
 ## Phase I – Business Process Modeling
 
-**Business Process:** Agricultural Data Collection,
-Validation, Storage and Reporting.
+### 1. Business Process
 
-**Modeling Tool:** diagrams.net (draw.io)
+**Agricultural Data Collection, Validation, Storage and Reporting**
 
-**Published Diagram:** [View AgriYield BPMN Diagram](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=AgriYield_Business_Process_29403.drawio&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1wpEvfcHa1U6DIcBEGvG-MkkZziMriVmn%26export%3Ddownload#%7B%22pageId%22%3A%22agriyield-phase1%22%7D)
+AgriYield follows a structured process for collecting agricultural statistics from FAOSTAT, validating the records, storing approved data in an Oracle Database, analyzing crop performance, and presenting findings through Power BI dashboards.
 
-**Process Explanation:** [View Business Process Explanation](docs/business_process/business_process_explanation.pdf)
+### 2. Modeling Tool
+
+**Tool:** diagrams.net (draw.io)
+
+**Published Business Process Diagram:**  
+[View AgriYield Business Process Diagram](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=AgriYield_Business_Process_29403.drawio&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1wpEvfcHa1U6DIcBEGvG-MkkZziMriVmn%26export%3Ddownload#%7B%22pageId%22%3A%22agriyield-phase1%22%7D)
+
+### 3. Phase I Documentation
+
+| Document | Description |
+|---|---|
+| [Business Process Diagram](docs/business_process/business_process_diagram.pdf) | PDF version of the BPMN diagram |
+| [Full Business Process Documentation](docs/business_process/business_process_explanation.pdf) | Complete Phase I explanation and documentation |
+| [One-Page Business Process Explanation](docs/business_process/business_process_one_page_explanation.pdf) | Concise explanation of the business process |
+
+### 4. Main Actors
+
+- Data Administrator
+- Oracle Database
+- Agricultural Data Analyst
+- Power BI
+- Agricultural Decision-Maker
+- FAOSTAT (External Data Provider)
+
+### 5. Data Operations
+
+The process includes creating, retrieving, and updating agricultural records. Invalid records are rejected or retained for review rather than routinely deleted.
