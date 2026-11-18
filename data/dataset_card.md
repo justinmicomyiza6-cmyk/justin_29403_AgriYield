@@ -8,7 +8,7 @@
 - **Source link:** https://www.fao.org/faostat/en/#data/QCL
 - **File name:** `FAOSTAT_data_en_11-18-2026.csv`
 - **Collection date:** 18 November 2026
-- **Geographical coverage:** East African countries
+- **Geographical coverage:** 18 East and Southern African countries, 6 crops, 2010–2024, 3 elements
 - **Licence:** FAOSTAT data is provided under the FAO's data-use terms. Confirm the applicable terms from the official source before redistribution.
 
 ## 2. What One Record Represents
