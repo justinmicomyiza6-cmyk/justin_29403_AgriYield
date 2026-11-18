@@ -13,7 +13,7 @@
 | Format | CSV |
 | Number of records | 4,041 data records |
 | Number of columns | 15 |
-| File size | Approximately 601.53 KB |
+| File size | 601.53 KB |
 | Collection date | 18 November 2026 |
 | Coverage | 18 African countries/areas |
 | Period covered | 2010–2024 |
