@@ -259,236 +259,71 @@ The final normalized database consists of six related tables:
 3. AGRICULTURAL_ELEMENTS
 4. AGRICULTURAL_YEARS
 5. DATA_QUALITY_FLAGS
+6. CROP_STATISTICS
 
-   5. Complete Field Mapping
+This structure reduces redundancy, improves data consistency, and supports reliable agricultural analysis.
+
+## 5. Complete Field Mapping
 
 Every original CSV column is mapped to a target table and column, documented as metadata, or omitted where redundant.
 
-Original CSV column
-
-Target table
-
-Target column
-
-Treatment
-
-Domain Code
-
-Dataset metadata
-
-Not applicable
-
-Omitted from relational tables
-
-Domain
-
-Dataset metadata
-
-Not applicable
-
-Omitted from relational tables
-
-Area Code (M49)
-
-COUNTRIES
-
-area_code_m49
-
-Retained
-
-Area
-
-COUNTRIES
-
-country_name
-
-Retained
-
-Element Code
-
-AGRICULTURAL_ELEMENTS
-
-element_code
-
-Retained
-
-Element
-
-AGRICULTURAL_ELEMENTS
-
-element_name
-
-Retained
-
-Item Code (CPC)
-
-CROPS
-
-item_code_cpc
-
-Retained
-
-Item
-
-CROPS
-
-item_name
-
-Retained
-
-Year Code
-
-AGRICULTURAL_YEARS
-
-year_code
-
-Retained
-
-Year
-
-None
-
-None
-
-Omitted as redundant
-
-Unit
-
-AGRICULTURAL_ELEMENTS
-
-unit
-
-Retained
-
-Value
-
-CROP_STATISTICS
-
-numeric_value
-
-Retained
-
-Flag
-
-CROP_STATISTICS
-
-flag_code
-
-Retained as foreign key
-
-Flag Description
-
-DATA_QUALITY_FLAGS
-
-flag_description
-
-Transformed
-
-Note
-
-CROP_STATISTICS
-
-note
-
-Retained
-
-5.1 Explanation and Required Transformations
-
-Original field
-
-Explanation and Phase IV requirements
-
-Domain Code
-
-The value QCL identifies the dataset domain. Document it as metadata and preserve it in the staging table.
-
-Domain
-
-Identifies the dataset as Crops and livestock products. Document it as metadata and preserve it in staging.
-
-Area Code (M49)
-
-Retain as the country identifier. Convert to an appropriate numeric type and use as the COUNTRIES primary key.
-
-Area
-
-Retain as the country name. Trim whitespace and store as text.
-
-Element Code
-
-Retain as the measurement identifier. Convert to an integer-compatible numeric type.
-
-Element
-
-Retain as the measurement description and store as text.
-
-Item Code (CPC)
-
-Retain as text. Do not convert to a number because leading zeros and decimal points must be preserved.
-
-Item
-
-Retain as the crop name. Store as text. Handle commas using correct CSV parsing.
-
-Year Code
-
-Retain as the year identifier. Convert to an integer-compatible numeric type.
-
-Year
-
-Omit from the normalized tables because it is reported to be identical to Year Code. Preserve it in staging for validation.
-
-Unit
-
-Retain in AGRICULTURAL_ELEMENTS because each measurement element determines its unit. Store as text.
-
-Value
-
-Retain as a nullable numeric value. Convert valid values to NUMBER and empty values to SQL NULL. Never replace missing values with zero.
-
-Flag
-
-Retain as a foreign key referencing DATA_QUALITY_FLAGS. Store as text.
-
-Flag Description
-
-Transform into the DATA_QUALITY_FLAGS reference table. Store the description once for each flag code.
-
-Note
-
-Retain in CROP_STATISTICS as optional observation-specific text. Empty values become SQL NULL.
-
-5.2 Phase IV Data Conversion and Cleaning Checklist
+| Original CSV column | Target table | Target column | Treatment |
+|---|---|---|---|
+| Domain Code | Dataset metadata | Not applicable | Omitted from relational tables |
+| Domain | Dataset metadata | Not applicable | Omitted from relational tables |
+| Area Code (M49) | COUNTRIES | area_code_m49 | Retained |
+| Area | COUNTRIES | country_name | Retained |
+| Element Code | AGRICULTURAL_ELEMENTS | element_code | Retained |
+| Element | AGRICULTURAL_ELEMENTS | element_name | Retained |
+| Item Code (CPC) | CROPS | item_code_cpc | Retained |
+| Item | CROPS | item_name | Retained |
+| Year Code | AGRICULTURAL_YEARS | year_code | Retained |
+| Year | None | None | Omitted as redundant |
+| Unit | AGRICULTURAL_ELEMENTS | unit | Retained |
+| Value | CROP_STATISTICS | numeric_value | Retained |
+| Flag | CROP_STATISTICS | flag_code | Retained as foreign key |
+| Flag Description | DATA_QUALITY_FLAGS | flag_description | Transformed |
+| Note | CROP_STATISTICS | note | Retained |
+
+### 5.1 Explanation and Required Transformations
+
+| Original field | Explanation and Phase IV requirements |
+|---|---|
+| Domain Code | The value QCL identifies the dataset domain. Document it as metadata and preserve it in the staging table. |
+| Domain | Identifies the dataset as Crops and livestock products. Document it as metadata and preserve it in staging. |
+| Area Code (M49) | Retain as the country identifier. Convert to an appropriate numeric type and use as the COUNTRIES primary key. |
+| Area | Retain as the country name. Trim whitespace and store as text. |
+| Element Code | Retain as the measurement identifier. Convert to an integer-compatible numeric type. |
+| Element | Retain as the measurement description and store as text. |
+| Item Code (CPC) | Retain as text. Do not convert to a number because leading zeros and decimal points must be preserved. |
+| Item | Retain as the crop name. Store as text. Handle commas using correct CSV parsing. |
+| Year Code | Retain as the year identifier. Convert to an integer-compatible numeric type. |
+| Year | Omit from the normalized tables because it is reported to be identical to Year Code. Preserve it in staging for validation. |
+| Unit | Retain in AGRICULTURAL_ELEMENTS because each measurement element determines its unit. Store as text. |
+| Value | Retain as a nullable numeric value. Convert valid values to NUMBER and empty values to SQL NULL. Never replace missing values with zero. |
+| Flag | Retain as a foreign key referencing DATA_QUALITY_FLAGS. Store as text. |
+| Flag Description | Transform into the DATA_QUALITY_FLAGS reference table. Store the description once for each flag code. |
+| Note | Retain in CROP_STATISTICS as optional observation-specific text. Empty values become SQL NULL. |
+
+### 5.2 Phase IV Data Conversion and Cleaning Checklist
 
 During implementation, the following process will be followed:
 
-Create a staging table named FAOSTAT_STAGE containing all 15 original CSV columns as text fields.
+1. Create a staging table named FAOSTAT_STAGE containing all 15 original CSV columns as text fields.
+2. Load the original CSV without changing its source values.
+3. Check the original row count and confirm that 4,041 data records were imported.
+4. Populate COUNTRIES with distinct country codes and names.
+5. Populate CROPS with distinct CPC codes and crop names.
+6. Populate AGRICULTURAL_ELEMENTS with distinct element codes, names, and units.
+7. Populate AGRICULTURAL_YEARS with distinct year codes.
+8. Populate DATA_QUALITY_FLAGS with the five distinct flag codes and descriptions.
+9. Populate CROP_STATISTICS using the corresponding primary and foreign keys.
+10. Convert numeric fields carefully and preserve missing values as NULL.
+11. Preserve CPC item codes as text.
+12. Validate the composite primary key and all foreign-key relationships.
+13. Compare final record counts against the original dataset.
 
-Load the original CSV without changing its source values.
-
-Check the original row count and confirm that 4,041 data records were imported.
-
-Populate COUNTRIES with distinct country codes and names.
-
-Populate CROPS with distinct CPC codes and crop names.
-
-Populate AGRICULTURAL_ELEMENTS with distinct element codes, names, and units.
-
-Populate AGRICULTURAL_YEARS with distinct year codes.
-
-Populate DATA_QUALITY_FLAGS with the five distinct flag codes and descriptions.
-
-Populate CROP_STATISTICS using the corresponding primary and foreign keys.
-
-Convert numeric fields carefully and preserve missing values as NULL.
-
-Preserve CPC item codes as text.
-
-Validate the composite primary key and all foreign-key relationships.
-
-Compare final record counts against the original dataset.
-
-5.3 Expected Final Structure
+### 5.3 Expected Final Structure
 
 The final CROP_STATISTICS table will use the following composite primary key:
 
