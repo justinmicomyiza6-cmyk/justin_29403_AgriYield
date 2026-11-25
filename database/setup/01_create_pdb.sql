@@ -10,7 +10,7 @@ Description: Creates the AgriYield Pluggable Database.
 
 CREATE PLUGGABLE DATABASE b_29403_justin_agri_db
 ADMIN USER justin_admin
-IDENTIFIED BY justin
+IDENTIFIED BY "&&ADMIN_PASSWORD"
 FILE_NAME_CONVERT = (
     'C:\PLSQL\ORCL21\PDBSEED\',
     'C:\PLSQL\ORCL21\B_29403_JUSTIN_AGRI_DB\'
