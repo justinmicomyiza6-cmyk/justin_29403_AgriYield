@@ -106,3 +106,21 @@ The process includes creating, retrieving, and updating agricultural records. In
 - [Entity Relationship Diagram](docs/design/erd.png)
 - [Data Dictionary](docs/design/data_dictionary.md)
 - [Raw Dataset](data/raw/FAOSTAT_data_en_11-18-2026.csv)
+
+
+## Phase III — Database (PDB) Creation
+
+This phase covers the creation and configuration of the Oracle 21c Pluggable Database (PDB) for the AgriYield project.
+
+### Database Configuration
+- **PDB Name:** `B_29403_JUSTIN_AGRI_DB`
+- **Administrator:** `JUSTIN_ADMIN`
+- **Data Tablespace:** `AGRIYIELD_DATA` (100 MB, autoextend enabled, maximum 1 GB)
+- **Index Tablespace:** `AGRIYIELD_IDX` (50 MB, autoextend enabled, maximum 500 MB)
+- **Temporary Tablespace:** `AGRIYIELD_TEMP` (50 MB, autoextend enabled, maximum 500 MB)
+- **Archive Logging:** Enabled (ARCHIVELOG mode)
+- **Enterprise Manager Express:** Configured on HTTPS port `5503`
+
+### Deliverables
+- [Database Setup SQL Scripts](database/setup/)
+- [Database Configuration Evidence and Screenshots](database/screenshots/)
