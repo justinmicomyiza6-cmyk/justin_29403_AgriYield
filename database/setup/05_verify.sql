@@ -1,0 +1,39 @@
+/*
+Name: Justin
+Student ID: 29403
+Group: B
+Project: AgriYield
+Description: Verifies PDB, administrator, tablespaces and quotas.
+*/
+
+-- Connect as JUSTIN_ADMIN to the AgriYield PDB.
+
+-- 1. Verify PDB status.
+SELECT NAME, OPEN_MODE
+FROM V$PDBS
+WHERE NAME = 'B_29403_JUSTIN_AGRI_DB';
+
+-- 2. Verify administrator and default tablespaces.
+SELECT USERNAME, ACCOUNT_STATUS, DEFAULT_TABLESPACE, TEMPORARY_TABLESPACE
+FROM DBA_USERS
+WHERE USERNAME = 'JUSTIN_ADMIN';
+
+-- 3. Verify permanent tablespace sizes and autoextension.
+SELECT TABLESPACE_NAME, FILE_NAME, BYTES / 1024 / 1024 AS SIZE_MB,
+       AUTOEXTENSIBLE, MAXBYTES / 1024 / 1024 AS MAX_SIZE_MB
+FROM DBA_DATA_FILES
+WHERE TABLESPACE_NAME IN ('AGRIYIELD_DATA', 'AGRIYIELD_IDX');
+
+-- 4. Verify temporary tablespace size and autoextension.
+SELECT TABLESPACE_NAME, FILE_NAME, BYTES / 1024 / 1024 AS SIZE_MB,
+       AUTOEXTENSIBLE, MAXBYTES / 1024 / 1024 AS MAX_SIZE_MB
+FROM DBA_TEMP_FILES
+WHERE TABLESPACE_NAME = 'AGRIYIELD_TEMP';
+
+-- 5. Verify administrator quotas.
+SELECT USERNAME, TABLESPACE_NAME, MAX_BYTES
+FROM DBA_TS_QUOTAS
+WHERE USERNAME = 'JUSTIN_ADMIN';
+
+-- 6. Verify ARCHIVELOG mode.
+-- Run ARCHIVE LOG LIST separately in SQL*Plus as SYSDBA.
