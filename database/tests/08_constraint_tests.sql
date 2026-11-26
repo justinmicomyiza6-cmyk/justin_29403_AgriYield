@@ -57,24 +57,9 @@ VALUES (
 -- TEST 6: CHECK constraint violation for negative value
 -- Expected: ORA-02290
 
-INSERT INTO crop_statistics (
-    area_code_m49,
-    item_code_cpc,
-    element_code,
-    year_code,
-    flag_code,
-    numeric_value,
-    note
-)
-VALUES (
-    '108',
-    '01701',
-    '5312',
-    2014,
-    'A',
-    -100,
-    'Negative value test'
-);
+UPDATE crop_statistics
+SET numeric_value = -100
+WHERE ROWNUM = 1;
 
 -- No COMMIT is required because all tests should fail.
 -- End of constraint tests.
