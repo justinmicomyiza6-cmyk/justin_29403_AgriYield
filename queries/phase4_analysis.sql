@@ -1,3 +1,9 @@
+-- Student: Justin Micomyiza
+-- Student ID: 29403
+-- Group: B
+-- Project: AgriYield - Crop Yield Analysis and Agricultural Decision Support System
+-- Course: INSY 8311
+
 -- 1. Reporting JOIN
 SELECT *
 FROM vw_agri_reporting
