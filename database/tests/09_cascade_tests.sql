@@ -36,7 +36,9 @@ WHERE item_code_cpc = 'TESTCROP';
 
 
 -- TEST 2: ON DELETE SET NULL
--- Deleting a temporary flag should set child flag_code to NULL.
+
+INSERT INTO countries (area_code_m49, country_name)
+VALUES ('9999', 'Temporary Test Country');
 
 INSERT INTO data_quality_flags (flag_code, flag_description)
 VALUES ('Z', 'Temporary test flag');
@@ -46,7 +48,7 @@ INSERT INTO crop_statistics (
     year_code, flag_code, numeric_value, note
 )
 VALUES (
-    '108', '01701', '5312',
+    '9999', '01701', '5312',
     2014, 'Z', 100, 'Set null test'
 );
 
@@ -55,11 +57,17 @@ WHERE flag_code = 'Z';
 
 SELECT flag_code
 FROM crop_statistics
-WHERE area_code_m49 = '108'
+WHERE area_code_m49 = '9999'
   AND item_code_cpc = '01701'
   AND element_code = '5312'
   AND year_code = 2014;
 
+-- Cleanup temporary test records
+DELETE FROM crop_statistics
+WHERE area_code_m49 = '9999';
+
+DELETE FROM countries
+WHERE area_code_m49 = '9999';
 
 -- TEST 3: NO ACTION (Oracle default)
 -- Deleting a country referenced by statistics must fail.
