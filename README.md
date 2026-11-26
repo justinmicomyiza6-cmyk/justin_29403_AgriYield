@@ -34,10 +34,10 @@ The project will use crop production statistics, including production quantities
 ## 4. Planned Database Tables
 1. CROPS
 2. COUNTRIES
-3. AGRICULTURAL_SEASONS
-4. HARVESTED_AREAS
-5. CROP_PRODUCTION
-6. YIELD_ANALYSIS
+3. AGRICULTURAL_ELEMENTS
+4. AGRICULTURAL_YEARS
+5. CROP_STATISTICS
+6. DATA_QUALITY_FLAGS
 
 ## 5. Planned PL/SQL Features
 - Stored procedures
