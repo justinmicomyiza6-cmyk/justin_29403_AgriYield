@@ -91,10 +91,10 @@ The following tables document every column, its Oracle datatype, nullability, co
 
 **Purpose:** Stores country or area identifiers and their corresponding names. This avoids repeating country names in every crop-statistic record.
 
-| Column | Oracle Data Type | NULL Allowed | Constraint | Why / Description |
+| Column | Oracle Data Type | NULL Allowed | Constraint | Purpose / Description |
 |---|---|---|---|---|
-| area_code_m49 | VARCHAR2(10) | No | PK | Stores the FAOSTAT M49 area identifier. It uniquely identifies each country or area and is referenced by CROP_STATISTICS. |
-| country_name | VARCHAR2(100) | No | NOT NULL, UQ | Stores the readable country or area name. The UNIQUE constraint prevents duplicate names and supports accurate reporting. |
+| area_code_m49 | VARCHAR2(10) | No | Primary Key (PK) | Stores the unique FAOSTAT M49 geographical code for each country or area. |
+| country_name | VARCHAR2(100) | No | Unique (UQ) | Stores the country or area name. Duplicate names are not allowed. |
 
 **Design justification:** A separate country table avoids repeating country names across thousands of observations. The natural FAOSTAT area code is used as the primary key.
 
@@ -102,10 +102,10 @@ The following tables document every column, its Oracle datatype, nullability, co
 
 **Purpose:** Stores crop identifiers and crop names used in the agricultural statistics.
 
-| Column | Oracle Data Type | NULL Allowed | Constraint | Why / Description |
+| Column | Oracle Data Type | NULL Allowed | Constraint | Purpose / Description |
 |---|---|---|---|---|
-| item_code_cpc | VARCHAR2(10) | No | PK | Stores the FAOSTAT CPC item identifier. It uniquely identifies each crop and is referenced by CROP_STATISTICS. |
-| item_name | VARCHAR2(50) | No | NOT NULL | Stores the readable crop name, such as maize, rice or sorghum. It supports understandable reports and crop comparisons. |
+| item_code_cpc | VARCHAR2(10) | No | Primary Key (PK) | Stores the unique CPC code identifying each crop. |
+| item_name | VARCHAR2(50) | No | NOT NULL | Stores the name of the crop. |
 
 **Design justification:** Crop details are separated from measurements to prevent repeated crop names and maintain consistent crop identification.
 
@@ -113,11 +113,11 @@ The following tables document every column, its Oracle datatype, nullability, co
 
 **Purpose:** Stores the agricultural measurement indicators and their associated units.
 
-| Column | Oracle Data Type | NULL Allowed | Constraint | Why / Description |
+| Column | Oracle Data Type | NULL Allowed | Constraint | Purpose / Description |
 |---|---|---|---|---|
-| element_code | VARCHAR2(10) | No | PK | Stores the FAOSTAT element identifier. It distinguishes harvested area, yield and production. |
-| element_name | VARCHAR2(50) | No | NOT NULL | Stores the readable measurement name, such as Area harvested, Yield or Production. |
-| unit | VARCHAR2(20) | No | NOT NULL | Stores the measurement unit associated with the element, such as ha, kg/ha or t. This ensures measurements are interpreted correctly. |
+| element_code | VARCHAR2(10) | No | Primary Key (PK) | Stores the unique code for an agricultural measurement element. |
+| element_name | VARCHAR2(50) | No | NOT NULL | Stores the measurement name, such as Production, Yield, or Area harvested. |
+| unit | VARCHAR2(20) | No | NOT NULL | Stores the measurement unit, such as tonnes, kg/ha, or hectares. |
 
 **Design justification:** Measurement descriptions and units are stored once instead of being repeated in every observation. This also prevents inconsistent unit descriptions.
 
@@ -125,9 +125,9 @@ The following tables document every column, its Oracle datatype, nullability, co
 
 **Purpose:** Stores unique agricultural year values used to organize and compare observations over time.
 
-| Column | Oracle Data Type | NULL Allowed | Constraint | Why / Description |
+| Column | Oracle Data Type | NULL Allowed | Constraint | Purpose / Description |
 |---|---|---|---|---|
-| year_code | NUMBER(4) | No | PK, CK | Stores the four-digit agricultural year. It uniquely identifies each year and is referenced by CROP_STATISTICS. The CHECK constraint restricts values to the range 1900–2100. |
+| year_code | NUMBER(4) | No | Primary Key (PK), CHECK (1900–2100) | Stores the agricultural observation year. |
 
 **Design justification:** A separate year table avoids repeated year values and provides a consistent reference for time-based analysis.
 
@@ -135,10 +135,10 @@ The following tables document every column, its Oracle datatype, nullability, co
 
 **Purpose:** Stores FAOSTAT quality codes and their descriptions.
 
-| Column | Oracle Data Type | NULL Allowed | Constraint | Why / Description |
+| Column | Oracle Data Type | NULL Allowed | Constraint | Purpose / Description |
 |---|---|---|---|---|
-| flag_code | CHAR(1) | No | PK | Stores the single-character FAOSTAT quality code, such as A, E, I, X or M. It uniquely identifies a quality status. |
-| flag_description | VARCHAR2(50) | No | NOT NULL | Stores the explanation of each quality code, allowing users to understand the reliability or status of a reported observation. |
+| flag_code | CHAR(1) | No | Primary Key (PK) | Stores the unique data quality flag code. |
+| flag_description | VARCHAR2(50) | No | NOT NULL | Explains the meaning of each data quality flag. |
 
 **Design justification:** Quality codes and descriptions are stored separately to avoid repeating their meanings throughout the statistics table.
 
@@ -146,15 +146,15 @@ The following tables document every column, its Oracle datatype, nullability, co
 
 **Purpose:** Stores the actual agricultural observations. Each row represents one measurement for a particular country, crop, agricultural element and year.
 
-| Column | Oracle Data Type | NULL Allowed | Constraint | Why / Description |
+| Column | Oracle Data Type | NULL Allowed | Constraint | Purpose / Description |
 |---|---|---|---|---|
-| area_code_m49 | VARCHAR2(10) | No | PK, FK | Identifies the country or area associated with the observation. References COUNTRIES and forms part of the composite primary key. |
-| item_code_cpc | VARCHAR2(10) | No | PK, FK | Identifies the crop being measured. References CROPS and forms part of the composite primary key. |
-| element_code | VARCHAR2(10) | No | PK, FK | Identifies the agricultural measurement indicator. References AGRICULTURAL_ELEMENTS and forms part of the composite primary key. |
-| year_code | NUMBER(4) | No | PK, FK | Identifies the year of the observation. References AGRICULTURAL_YEARS and forms part of the composite primary key. |
-| flag_code | CHAR(1) | Yes | FK | Identifies the FAOSTAT quality status. References DATA_QUALITY_FLAGS. It is nullable to support ON DELETE SET NULL while retaining the observation. |
-| numeric_value | NUMBER(10,2) | Yes | CK | Stores the numeric agricultural measurement, such as harvested area, production or yield. It permits NULL because some source observations have no numeric value. The CHECK constraint prevents negative measurements. |
-| note | VARCHAR2(100) | Yes | — | Stores optional additional information supplied by FAOSTAT, such as an unofficial-figure note. It is nullable because not every observation contains a note. |
+| area_code_m49 | VARCHAR2(10) | No | PK, FK | Identifies the country or area associated with the observation. |
+| item_code_cpc | VARCHAR2(10) | No | PK, FK | Identifies the crop associated with the observation. |
+| element_code | VARCHAR2(10) | No | PK, FK | Identifies the agricultural measurement element. |
+| year_code | NUMBER(4) | No | PK, FK | Identifies the year of the observation. |
+| flag_code | CHAR(1) | Yes | FK, ON DELETE SET NULL | Stores the data quality flag when one is available. |
+| numeric_value | NUMBER(10,2) | Yes | CHECK (value >= 0 when not NULL) | Stores the recorded agricultural measurement value. |
+| note | VARCHAR2(100) | Yes | None | Stores additional information or remarks about the observation. |
 
 **Design justification:**
 
