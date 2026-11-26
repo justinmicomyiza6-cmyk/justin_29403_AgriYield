@@ -37,4 +37,9 @@ CREATE INDEX idx_cs_crop_year
 ON crop_statistics (item_code_cpc, year_code)
 TABLESPACE agriyield_idx;
 
+-- Function-based index for case-insensitive country searches
+
+CREATE INDEX idx_countries_upper_name
+ON countries (UPPER(country_name))
+TABLESPACE agriyield_idx;
 -- End of script
