@@ -54,3 +54,29 @@ COMMIT;
 
 -- Parent tables loaded successfully.
 
+
+-- 6. Load CROP_STATISTICS (child table)
+
+INSERT INTO crop_statistics (
+    area_code_m49,
+    item_code_cpc,
+    element_code,
+    year_code,
+    flag_code,
+    numeric_value,
+    note
+)
+SELECT
+    area_code_m49,
+    item_code_cpc,
+    element_code,
+    year_code,
+    flag_code,
+    numeric_value,
+    note
+FROM stg_faostat_clean;
+
+COMMIT;
+
+-- End of data loading script
+
