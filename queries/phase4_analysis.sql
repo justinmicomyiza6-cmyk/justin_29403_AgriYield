@@ -27,3 +27,18 @@ WHERE item_code_cpc IN (
         )
     )
 );
+
+-- 4. Reporting View
+SELECT *
+FROM vw_agri_reporting
+FETCH FIRST 10 ROWS ONLY;
+
+-- 5. Crop-Year Summary View
+SELECT *
+FROM vw_crop_year_summary
+FETCH FIRST 10 ROWS ONLY;
+
+-- 6. Read-Only View
+SELECT *
+FROM vw_agri_readonly
+FETCH FIRST 10 ROWS ONLY;
